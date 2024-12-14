@@ -49,15 +49,18 @@ export default function Task() {
     setTask("");
   };
 
-  const handleDelete = (id) => {
-    if (confirm("Do you want to delete?") === true) {
-      const data = axiosInstance.delete(`/list/${id}`);
-      if (data) {
+  const handleDelete = async(id) => {
+    if(confirm("Do you want to delete")){
+        const data = await axiosInstance.delete(`/list/${id}`);
         setTrigger(!trigger);
-        alert(data.data.message);
-      }
+        if (data) {
+         
+          alert(data.data.message);
+        }
     }
-  };
+     
+    }
+  
 
   const handleEdit = (item) => {
     setIsEdit(true);
@@ -94,7 +97,7 @@ export default function Task() {
         </InputGroup>
       <div className="d-flex flex-column w-50 h-75 bg-light p-3 align-items-center rounded overflow-scroll sm-w-100">
         <div className="w-100">
-          {data.length > 0 &&
+          {data?.length > 0 &&
             data.map((item, index) => {
               return (
                 <div
@@ -108,9 +111,8 @@ export default function Task() {
                     <Button size="sm" onClick={() => handleEdit(item)} variant="warning">
                       Edit
                     </Button>
-                    <Button size="sm" onClick={() => handleDelete(item._id)} variant="danger">
-                      Delete
-                    </Button>
+                    <button className="sm btn btn-danger" onClick={() => handleDelete(item._id)}> Delete</button>
+                   
                   </div>
                 </div>
               );
