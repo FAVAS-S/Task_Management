@@ -13,7 +13,7 @@ function App() {
     <>
      
     <Routes>
-      <Route path='/' element={<Home />}/>
+      <Route path='/' element={<MainFile />}/>
       <Route path='/Main' element={<MainFile />}/>
       <Route path='*' element={<PageNotFount />}/>
     </Routes>

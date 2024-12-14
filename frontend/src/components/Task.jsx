@@ -5,40 +5,31 @@ import axiosInstance from "../../axios";
 export default function Task() {
   const [task, setTask] = useState("");
   const [data, setData] = useState([]);
-  const [trigger,setTrigger]= useState(false)
-  const [isEdit,setIsEdit]= useState(false)
-  const [id,setId]= useState(null)
+  const [trigger, setTrigger] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [id, setId] = useState(null);
+
   function handleTask(e) {
     setTask(e.target.value);
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if(!isEdit){
-        const data = await axiosInstance.post("/list", { list: task });
-      
+    if (!isEdit) {
+      const data = await axiosInstance.post("/list", { list: task });
 
-        if (data) {
-          
-          alert(data.data.message);
-         
-        }
+      if (data) {
+        alert(data.data.message);
+      }
+    } else {
+      const data = await axiosInstance.put(`/list/${id}`, { list: task });
 
-    }else{
-        const data= await axiosInstance.put(`/list/${id}`,{list:task})
-       
-        if(data){
-            alert(data.data.message)
-            
-            
-        }
-       
+      if (data) {
+        alert(data.data.message);
+      }
     }
-   handleClear()
-   
-    setTrigger(!trigger)
-
- 
+    handleClear();
+    setTrigger(!trigger);
   }
 
   useEffect(() => {
@@ -53,69 +44,80 @@ export default function Task() {
       });
   }, [trigger]);
 
-  const handleClear=()=>{
-        setIsEdit(false)
-        setTask("")
-  }
+  const handleClear = () => {
+    setIsEdit(false);
+    setTask("");
+  };
 
-  const handleDelete=(id)=>{
-    
-    if( confirm("dp you Want To delete")== true){
-        
-      const data=   axiosInstance.delete(`/list/${id}`)
-      if(data){
-        setTrigger(!trigger)
-        alert(data.data.message)
+  const handleDelete = (id) => {
+    if (confirm("Do you want to delete?") === true) {
+      const data = axiosInstance.delete(`/list/${id}`);
+      if (data) {
+        setTrigger(!trigger);
+        alert(data.data.message);
       }
     }
-  
+  };
 
-  }
-
-  const handleEdit =(item)=>{
-            setIsEdit(true)
-            setTask(item.list)
-            setId(item._id)
-      
-  }
+  const handleEdit = (item) => {
+    setIsEdit(true);
+    setTask(item.list);
+    setId(item._id);
+  };
 
   return (
-    <div className="d-flex align-items-center w-100 h-100 justify-content-center flex-column">
-      <InputGroup className="w-50 ">
-        <Form.Control
-          onChange={handleTask}
-          placeholder="Today tasks"
-          aria-label="Today tasks"
-          aria-describedby="basic-addon2"
-          value={task}
-        />
-        <Button
-          onClick={handleSubmit}
-          variant="outline-secondary"
-          className="w-25"
-          id="button-addon2"
-        >
-            {isEdit?"update":"Add"}
-        </Button>
-        <Button
-          onClick={handleClear}
-          variant="outline-secondary"
-          className="w-25"
-          id="button-addon2"
-        >
+    <div className="d-flex align-items-center flex-column w-100 h-100 justify-content-center">
+        <InputGroup className="w-50 mb-3">
+          <Form.Control
+            onChange={handleTask}
+            placeholder="Today tasks"
+            aria-label="Today tasks"
+            aria-describedby="basic-addon2"
+            value={task}
+          />
+          <Button
+            onClick={handleSubmit}
+            variant="outline-secondary"
+            className="w-25"
+            id="button-addon2"
+          >
+            {isEdit ? "Update" : "Add"}
+          </Button>
+          <Button
+            onClick={handleClear}
+            variant="outline-secondary"
+            className="w-25"
+            id="button-addon2"
+          >
             Clear
-        </Button>
-      </InputGroup>
-      {data.length > 0 &&
-        data.map((item, index) => {
-          return (
-            <div className="bg-light w-25 mt-2 text-body rounded d-flex justify-content-between">
-              <div>{item.list}</div>
-              <button onClick={()=>handleEdit(item)}>edit</button>
-              <button onClick={()=>handleDelete(item._id)}>delete</button>
-            </div>
-          );
-        })}
+          </Button>
+        </InputGroup>
+      <div className="d-flex flex-column w-50 h-75 bg-light p-3 align-items-center rounded overflow-scroll sm-w-100">
+        <div className="w-100">
+          {data.length > 0 &&
+            data.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  className="bg-light w-100 mt-2 text-body d-flex justify-content-between shadow-sm p-3 bg-body-tertiary rounded flex-wrap"
+                >
+                  <div className="text-truncate" style={{ maxWidth: "60%" }}>
+                    {item.list}
+                  </div>
+                  <div className="d-flex gap-2">
+                    <Button size="sm" onClick={() => handleEdit(item)} variant="warning">
+                      Edit
+                    </Button>
+                    <Button size="sm" onClick={() => handleDelete(item._id)} variant="danger">
+                      Delete
+                    </Button>
+                  </div>
+                </div>
+              );
+            })}
+        </div>
+      </div>
     </div>
   );
 }
+
