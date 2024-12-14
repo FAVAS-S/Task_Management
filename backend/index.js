@@ -12,7 +12,7 @@ import cors from 'cors'
 
  app.use(cors({
    credentials:true,
-   origin:["http://localhost:5173"]
+   origin:["http://localhost:5173","https://task-management-peach-eight.vercel.app"]
  }))
  app.use(express.json())
  app.use(bodyParser.json())
