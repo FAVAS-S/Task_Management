@@ -97,6 +97,7 @@ export default function Task() {
         </InputGroup>
       <div className="d-flex flex-column w-50 h-75 bg-light p-3 align-items-center rounded overflow-scroll sm-w-100">
         <div className="w-100">
+            {/* maping List data array */}
           {data?.length > 0 &&
             data.map((item, index) => {
               return (

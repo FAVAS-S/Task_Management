@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import taskModel from "../models/taskModel.js";
 
+// Task list Added api
 export const taskListAdd = async (req, res) => {
   const { list } = req.body;
   try {
@@ -22,6 +23,8 @@ export const taskListAdd = async (req, res) => {
   }
 };
 
+
+// Task list Get api
 export const taskGet = async (req, res) => {
   try {
     const data = await taskModel.find();
@@ -35,6 +38,7 @@ export const taskGet = async (req, res) => {
   }
 };
 
+// Task List get by Id api
 export const TaskGetById = async (req, res) => {
   try {
     const id = req.params.id;
@@ -53,6 +57,7 @@ export const TaskGetById = async (req, res) => {
   }
 };
 
+// Task list delete
 export const TaskDelete = async(req, res) => {
   try {
     const Id = req.params.id;
@@ -71,6 +76,7 @@ export const TaskDelete = async(req, res) => {
   }
 };
 
+// task List Update
 export const TaskUpdate= async(req,res)=>{
        try {
         const id = req.params.id

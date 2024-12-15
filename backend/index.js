@@ -10,6 +10,7 @@ import cors from 'cors'
 
  dotenv.config()
 
+//  cors for accessing front to backend
  app.use(cors({
    credentials:true,
    origin:["http://localhost:5173","https://task-management-peach-eight.vercel.app"]
@@ -21,9 +22,11 @@ import cors from 'cors'
  app.get('/',(req,res)=>{
     return res.sendStatus(200)
  })
+ 
 
  app.use('/api',taskRouter)
 
  const Port = process.env.PORT || 3001
 
+ 
  app.listen(Port,()=>console.log(`http://localhost:${Port}`))

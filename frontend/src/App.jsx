@@ -11,10 +11,11 @@ function App() {
 
   return (
     <>
-     
+     {/* using react router dom for routing */}
     <Routes>
       <Route path='/' element={<MainFile />}/>
       <Route path='/Main' element={<MainFile />}/>
+      {/* 404 error page code */}
       <Route path='*' element={<PageNotFount />}/>
     </Routes>
     

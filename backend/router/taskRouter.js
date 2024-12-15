@@ -3,6 +3,8 @@ import {  TaskDelete, taskGet, TaskGetById, taskListAdd, TaskUpdate } from "../c
 
 const taskRouter = express.Router();
 
+
+// router for api
 taskRouter.post("/list", taskListAdd);
 taskRouter.get('/list',taskGet)
 taskRouter.get('/listes/:id',TaskGetById)
